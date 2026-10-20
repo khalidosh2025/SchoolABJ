@@ -1,0 +1,29 @@
+﻿@page "/Index"
+@inject NavigationManager Navigation
+@inject TabsState TabsState
+
+<PageTitle>بوابة المدرسة</PageTitle>
+
+<div dir="rtl" class="rtl-content">
+    <h1>الصفحة الرئيسية</h1>    
+    <h1>لمدرسة على بن جاسم بن محمد الثانوية</h1>
+    <span @onclick="Logout" style="font-size:large; cursor:pointer; color:cornflowerblue">اضغط هنا</span>
+    @* <SurveyPrompt Title="How is Blazor working for you?" /> *@
+</div>
+
+@code {
+    private void Logout()
+    {
+        Navigation.NavigateTo("/", forceLoad: true);
+    }
+    // ClassVists Tabs
+    protected override void OnInitialized()
+    {
+        TabsState.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        TabsState.OnChange -= StateHasChanged;
+    }
+}

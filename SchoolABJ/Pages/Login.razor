@@ -1,0 +1,87 @@
+﻿@page "/Login"  
+@layout NoMenuLayout
+@inject EmpService EmpService
+@inject NavigationManager Navigation
+@using Microsoft.AspNetCore.Components.Web
+
+@using System.Threading.Tasks  
+
+<PageTitle>تسجيل دخول</PageTitle>  
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<!-- CSS references -->  
+<link rel="stylesheet" href="/css/login/normalize-5.0.0.min.css">  
+<link rel="stylesheet" href="/css/login/style.css">  
+
+</head>
+
+<body>
+
+<div class="container">  
+    <div class="top"></div>  
+    <div class="bottom"></div>
+        <div class="center">
+            <h2>تسجيل دخول</h2>
+            <input type="UserName" placeholder="User Name" @bind="UserName" @onkeyup="HandleUserNameKeyUp" />
+            <input type="Password" placeholder="Password" @bind="Password" @onkeyup="HandleUserNameKeyUp" />
+
+            <button class="login-btn" type="button" @onclick="PerformLogin">دخول</button> 
+        <p></p>
+            <a href="/" style=" font-size:large;">نسيت كلمة المرور؟</a>
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div style="color:red">@errorMessage</div>
+            }
+            <p></p>
+            <a href="/" style=" font-size:x-large;">الرئيسية</a>  
+    </div>  
+</div>  
+</body>
+</html>
+
+@code {  
+    private string? UserName;  
+    private string? Password;
+    private string? errorMessage;
+
+   
+    private async Task PerformLogin()
+    {
+        if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
+        {
+            errorMessage = "الرجاء التأكد من ادخال اسم المستخدم وكلمة المرور";
+            return;
+        }
+
+        var isValid = await EmpService.ValidateUserAsync(UserName, Password);
+        if (isValid)
+        {
+            Navigation.NavigateTo("/Index");
+        }
+        else
+        {
+            errorMessage = "اسم المستخدم أو كلمة المرور غير صحيحة";
+        }
+    }
+
+    private async Task HandleUserNameKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await PerformLogin();
+        }
+    }
+
+   
+
+    // protected override void OnInitialized()  
+    // {  
+    //     UserName = EmpService.GetFirstEmpPassword();
+    // }  
+ 
+}

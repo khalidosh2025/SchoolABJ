@@ -1,0 +1,144 @@
+﻿@inject NavigationManager NavigationManager
+@inject TabsState TabsState
+
+@code {
+    private bool showSubMenu1;
+    private bool showSubMenu2;
+    private bool showSubMenu3;
+
+    private void ToggleSubMenu1()
+    {
+        showSubMenu1 = !showSubMenu1;
+        if (showSubMenu1)
+        {
+            showSubMenu2 = false; showSubMenu3 = false;
+        }
+    }
+    private void ToggleSubMenu2()
+    {
+        showSubMenu2 = !showSubMenu2;
+        if (showSubMenu2)
+        {
+            showSubMenu1 = false;
+            showSubMenu3 = false;
+            TabsState.HideTabs();
+        }
+    }
+    private void ToggleSubMenu3()
+    {
+        showSubMenu3 = !showSubMenu3;
+        if (showSubMenu3)
+        {
+            showSubMenu1 = false;
+            showSubMenu2 = false;
+            TabsState.HideTabs();
+        }
+    }
+    private void HideAllSubMenus()
+    {
+        showSubMenu1 = false;
+        showSubMenu2 = false;
+        showSubMenu3 = false;
+        TabsState.HideTabs(); // Hide the tabs when navigating to index
+        NavigationManager.NavigateTo("/Index", forceLoad: true);
+    }
+    // Show ClassVisits Tabs
+    private void ShowClassVisitsTabs()
+    {
+        TabsState.ShowTabs();
+        // Optionally, hide submenus if needed
+        //HideAllSubMenus();
+    }
+
+
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/Index" @onclick="HideAllSubMenus" style="font-size:x-large">قائمة المهام</a>
+    </div>
+</div>
+
+<div id="menu" class="nav-scrollable">
+    <nav class="flex-column">
+
+        <!-- Main 1 -->
+        <div class="nav-item px-3">
+            <a id="main1" class="btn center" href="#" @onclick:preventDefault="true" @onclick="ToggleSubMenu1">
+                شئون أكاديمية
+                <i class="fa fa-graduation-cap ms-2" aria-hidden="true"></i>
+            </a>
+        </div>
+        @if (showSubMenu1)
+        {
+            <div class="nav-item px-3">
+                <a id="sub11" class="nav-link" href="#" @onclick:preventDefault="true" @onclick="ShowClassVisitsTabs">
+                    <span class="bi bi-eye ms-2" aria-hidden="true"></span>
+                    الزيارات الصفية
+                    
+                </a>
+            </div>
+            <div class="nav-item px-3">
+                <a id="sub12" class="nav-link" href="#" @onclick:preventDefault="true">
+                    <span class="bi bi-graph-up ms-2" aria-hidden="true"></span>
+                    تقييم المعلمين
+                    
+                </a>
+            </div>
+        }
+
+        <!-- Main 2 -->
+        <div class="nav-item px-3">
+            <a id="main2" class="btn center" href="#" @onclick:preventDefault="true" @onclick="ToggleSubMenu2">
+                شئون إدارية
+                <span class="fa fa-building ms-2" aria-hidden="true"></span>
+            </a>
+        </div>
+        @if (showSubMenu2)
+        {
+            <div class="nav-item px-3">
+                <a id="sub21" class="nav-link" href="#" @onclick:preventDefault="true">
+                    <span class="bi bi-gear ms-2" aria-hidden="true"></span>
+                    مهام إدارية
+                    
+                </a>
+            </div>
+            <div class="nav-item px-3">
+                <a id="sub22" class="nav-link" href="#" @onclick:preventDefault="true">
+                    <span class="bi bi-graph-up ms-2" aria-hidden="true"></span>
+                    تقييم الإداريين
+                    
+                </a>
+            </div>
+        }
+
+        <!-- Main 3 -->
+        <div class="nav-item px-3">
+            <a id="main3" class="btn center" href="#" @onclick:preventDefault="true" @onclick="ToggleSubMenu3">
+                شئون الطلاب
+                <span class="oi oi-list-rich" aria-hidden="true"></span>
+            </a>
+        </div>
+        @if (showSubMenu3)
+        {
+            <div class="nav-item px-3">
+                <a id="sub31" class="nav-link" href="#" @onclick:preventDefault="true">
+                    <span class="bi bi-exclamation-triangle ms-2" aria-hidden="true"></span>
+                    المخالفات سلوكيه
+                    
+                </a>
+            </div>
+            <div class="nav-item px-3">
+                <a id="sub32" class="nav-link" href="#" @onclick:preventDefault="true">
+                    <span class="bi bi-clipboard-check ms-2" aria-hidden="true"></span>
+                    التقييم سلوكي
+                    
+                </a>
+            </div>
+        }
+    </nav>
+</div>

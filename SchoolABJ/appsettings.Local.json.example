@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "SchoolDB": "Server=YOUR-SERVER\\SQLEXPRESS;Database=SchoolDB;User Id=YOUR-USER;Password=YOUR-PASSWORD;TrustServerCertificate=True;"
+  }
+}

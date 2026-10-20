@@ -1,0 +1,49 @@
+﻿@using SchoolABJ.Pages
+@inherits LayoutComponentBase
+@inject NavigationManager Navigation
+
+@inject TabsState TabsState
+@implements IDisposable
+
+<PageTitle>SchoolABJ</PageTitle>
+
+<div class="page">   
+
+    <main>
+        <div class="top-row px-4">
+            <span @onclick="Logout" style="font-size:large; cursor:pointer;">الرئيسية</span>
+        
+        @if (TabsState.ShowClassVisitsTabs)
+            {
+                <ClassVisitsTabs/>
+            }
+
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+</div>
+
+@code{
+    private void Logout()
+    {
+        Navigation.NavigateTo("/", forceLoad: true);
+    }
+    // ClassVists Tabs
+    protected override void OnInitialized()
+    {
+        TabsState.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        TabsState.OnChange -= StateHasChanged;
+    }
+}

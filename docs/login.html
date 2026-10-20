@@ -1,0 +1,43 @@
+﻿@page "/Login"  
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<!-- CSS references -->  
+<link rel="stylesheet" href="./css/login/normalize-5.0.0.min.css">  
+<link rel="stylesheet" href="./css/login/style.css">  
+
+</head>
+
+<body>
+
+<div class="container">  
+    <div class="top"></div>  
+    <div class="bottom"></div>
+        <div class="center">
+            <h2>تسجيل دخول</h2>
+            <input type="text" placeholder="User Name" id="userName" />
+            <input type="password" placeholder="Password" id="password" />
+
+            <button class="login-btn" type="button" onclick="staticLogin()">دخول</button> 
+        <p></p>
+            <a href="/" style=" font-size:large;">نسيت كلمة المرور؟</a>
+            <div id="err" style="color:red"></div>
+            <p></p>
+            <a href="/" style=" font-size:x-large;">الرئيسية</a>  
+    </div>  
+</div>  
+<script>
+function staticLogin(){
+  var el=document.getElementById('err');
+  el.textContent='This is the static GitHub Pages preview. The live application (with database) runs from the ASP.NET Core server.';
+}
+</script>
+</body>
+</html>
+

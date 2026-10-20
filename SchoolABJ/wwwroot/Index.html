@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>SchoolABJ Progress Redirect</title>
+    <base href="/" />
+    <!-- Favicons -->
+    <link href="favicon.ico" rel="icon">
+    <link href="css/app.css" rel="stylesheet" />
+    <style>
+        #loading-progress {
+            width: 50%;
+            background-color: #f3f3f3;
+            margin: 100px auto;
+            border-radius: 5px;
+        }
+
+        #progress-bar {
+            width: 0%;
+            height: 30px;
+            background-color: #4CAF50;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="loading-progress">
+            <div id="progress-bar">0%</div>
+        </div>
+        <h1 style="text-align:center">...تحميل</h1>
+    </div>
+
+    <a href="" class="reload"></a>
+
+    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
+
+    <script>
+        function startProgressAndRedirect() {
+            const progressBar = document.getElementById("progress-bar");
+            let width = 0;
+            const duration = 3000; // 3 seconds
+            const intervalTime = 30; // Update every 30ms
+
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    document.getElementById("app").style.display = 'none';
+                    // Trigger the reload link click
+                    document.querySelector('.reload').click();
+                    // Blazor.start(); // If you want to start Blazor after reload, move this to the new page
+                } else {
+                    width += (intervalTime / duration) * 100;
+                    if (width > 100) width = 100;
+                    progressBar.style.width = width + "%";
+                    progressBar.innerHTML = Math.round(width) + "%";
+                }
+            }, intervalTime);
+        }
+
+        startProgressAndRedirect();
+    </script>
+</body>
+</html>
