@@ -127,7 +127,7 @@
 		}
 		/* Next event date "yyyy/m/d"		*/
 		/*initializeClock(((new Date()).getFullYear() + 1) + "/1/1")*/
-		initializeClock("2027/12/12") /* set comming soon date */
+		initializeClock("2030/12/12") /* set comming soon date */
 	})()
 
 })(jQuery);
